@@ -1,0 +1,789 @@
+
+void sendInverterRead_DassTech(void) {
+    switch(inverter_seq) {
+        case 0:
+            inverter_seq++;
+			if (sendInverterCount[0] < 100) {
+            	sendInverterCount[0]++;
+            }
+            break;     
+        case 1:     //Inv-1: ^P001MOD
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x4D); //M
+            putchar0(0x4F); //O
+            putchar0(0x44); //D
+            TXEN=1;TXEN=1;  
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 2:     //Inv-1: ^P001ST1
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x31); //1
+            TXEN=1;TXEN=1;    
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 3:     //Inv-1: ^P001ST2
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x32); //2
+            TXEN=1;TXEN=1;      
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 4:     //Inv-1: ^P001ST3
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x33); //3
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 5:     //Inv-1: ^P001ST4
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x34); //4
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 6:     //Inv-1: ^P001ST6
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x36); //6
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 7:
+        case 8:
+        case 9:
+            inverter_seq++;
+            break;     
+
+        case 10:  
+        	if (eeInverterCount > 1) {  
+                if (sendInverterCount[1] < 100) {
+                    sendInverterCount[1]++;
+                }
+            timeout0 = 250;
+            	inverter_seq++;
+        	} else {
+				inverter_seq = 0;            	
+            }
+            break;    
+		
+        case 11:     //Inv-1: ^P001MOD
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x4D); //M
+            putchar0(0x4F); //O
+            putchar0(0x44); //D
+            TXEN=1;TXEN=1;  
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 12:     //Inv-1: ^P001ST1
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x31); //1
+            TXEN=1;TXEN=1;    
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 13:     //Inv-1: ^P001ST2
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x32); //2
+            TXEN=1;TXEN=1;      
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 14:     //Inv-1: ^P001ST3
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x33); //3
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 15:     //Inv-1: ^P001ST4
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x34); //4
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 16:     //Inv-1: ^P001ST6
+            //putchar0(0x5E); //^     
+            putchar0(0x50); //P
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x30); //0
+            putchar0(0x53); //S
+            putchar0(0x54); //T
+            putchar0(0x36); //6
+            TXEN=1;TXEN=1;     
+            rx_seq0 = 0;
+            
+#if (UDR_CLONE_MODE == 1)
+			write_dudr ( 0, 0x5E);  
+#else  
+			UDR0 = 0x5E ;  
+#endif  
+            inverter_seq++;
+            break;         
+        case 17:
+        case 18:
+        case 19:
+            inverter_seq++;
+            break;     
+		
+		
+		
+		case 20:
+            inverter_seq = 0;
+            break;
+        default:  
+            inverter_seq = 0;
+            break;
+    }
+}
+
+
+
+void rx0Control_DassTech1(void) {   
+	char rxdata;
+	rxdata = getchar0();
+
+	
+	switch(rx_seq0) {
+		case 0:        
+        	if (rxdata == '^') {
+				rcnt = 0;           
+                memset(rxbuff,0,sizeof(rxbuff));
+                timeout0 = 250;
+            	rx_seq0++;
+            } else if (rxdata == 0x02) {  
+                timeout0 = 250;
+				rx_seq0 = 200;
+			}   
+			break;        
+        case 1: 
+            if (rxdata == 'D') {
+                rx_seq0++;
+            } else {
+                rx_seq0 = 0;
+            }                     
+            break;
+        case 2:
+            switch(rxdata) {
+                case '0':                              
+                    rx_seq0++;
+                    break;
+                case '1':                              
+                    rx_seq0 = 10;
+                    break;
+                case '2':                              
+                    rx_seq0 = 20;
+                    break;
+                case '3':                              
+                    rx_seq0 = 30;
+                    break;
+                case '4':                              
+                    rx_seq0 = 40;
+                    break;
+                case '6':                              
+                    rx_seq0 = 60;
+                    break;
+                default:
+                    rx_seq0 = 0;
+                    break;
+            }
+            break;
+        case 3:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 4:
+        	if (rxdata == '4') {
+            	rx_seq0++;
+            } else if  (rxdata == '7') {
+            	rx_seq0 = 105;
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 5:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 14) {
+                //Inverter Mode (Phase, power capacity,rated in voltaeg)
+                //inverter[0].inv_phase = rxbuff[4]-0x30;            
+                rcnt = 0;   
+                rx_seq0 = 0;
+            }           
+        case 105:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 17) {
+                //Inverter Mode (Phase, power capacity,rated in voltaeg)
+                //inverter[0].inv_phase = rxbuff[4]-0x30;            
+                rcnt = 0;   
+                rx_seq0 = 0;
+            }           
+            break;
+            break;   
+            
+
+        //ST-1      
+        case 10:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+        	} else if (rxdata == '2') {
+            	rx_seq0 = 111;
+            } else {
+            	rx_seq0 = 0;                                     
+            }               
+            break;      
+        case 11:
+        	if (rxdata == '7') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 12:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 17) {
+//sprintf(str,"RX_seq:%02d ST1 ",rx_seq0); buzzer_flag |= BUZZER_TIC; tx_led_delay = 1000; put_str(0,0,str,1);
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];
+                inverter[0].solar_cell_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[8];str[1]=rxbuff[9];str[2]=rxbuff[10];str[3]=rxbuff[11];
+                inverter[0].solar_cell_current = atoi(str);
+                inverter[0].solar_cell_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[13];str[1]=rxbuff[14];str[2]=rxbuff[15];str[3]=rxbuff[16];
+                inverter[0].power_solar        = atoi(str);
+                rx_seq0 = 0;
+            }           
+            break; 
+
+        case 111:
+        	if (rxdata == '0') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 112:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 20) {
+//sprintf(str,"RX_seq:%02d ST1 ",rx_seq0); buzzer_flag |= BUZZER_TIC; tx_led_delay = 1000; put_str(0,0,str,1);
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];
+                inverter[0].solar_cell_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[8];str[1]=rxbuff[9];str[2]=rxbuff[10];str[3]=rxbuff[11];
+                inverter[0].solar_cell_current = atoi(str);
+                inverter[0].solar_cell_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[13];str[1]=rxbuff[14];str[2]=rxbuff[15];str[3]=rxbuff[16];
+                inverter[0].power_solar        = atoi(str);
+                //inverter[0].power_solar *= 10;
+                rx_seq0 = 0;
+            }           
+            break;                       
+
+        //ST-2      
+        case 20:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+        	} else if (rxdata == '2') {
+            	rx_seq0 = 121;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 21:
+        	if (rxdata == '9') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 22:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 19) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];
+                inverter[0].inv_u_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[8];str[1]=rxbuff[9];str[2]=rxbuff[10];
+                inverter[0].inv_v_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[12];str[1]=rxbuff[13];str[2]=rxbuff[14];
+                inverter[0].inv_w_voltage = atoi(str);
+
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[16];str[1]=rxbuff[17];str[2]=rxbuff[18];
+                inverter[0].inv_frequency = atoi(str);
+
+                rx_seq0 = 0;
+            }           
+            break;    
+                              
+        case 121:
+        	if (rxdata == '2') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 122:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 22) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];
+                inverter[0].inv_u_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[8];str[1]=rxbuff[9];str[2]=rxbuff[10];
+                inverter[0].inv_v_voltage = atoi(str);            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[12];str[1]=rxbuff[13];str[2]=rxbuff[14];
+                inverter[0].inv_w_voltage = atoi(str);
+
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[16];str[1]=rxbuff[17];str[2]=rxbuff[18];
+                inverter[0].inv_frequency = atoi(str);
+
+                rx_seq0 = 0;
+            }           
+            break;      
+
+        //ST-3      
+        case 30:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+        	} else if (rxdata == '2') {
+            	rx_seq0 = 131; 
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 31:
+        	if (rxdata == '8') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 32:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 18) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];str[3]=rxbuff[7];
+                inverter[0].inv_u_current = atoi(str);
+                inverter[0].inv_u_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[9];str[1]=rxbuff[10];str[2]=rxbuff[11];str[3]=rxbuff[12];
+                inverter[0].inv_v_current = atoi(str);
+                inverter[0].inv_v_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[14];str[1]=rxbuff[15];str[2]=rxbuff[16];str[3]=rxbuff[17];
+                inverter[0].inv_w_current = atoi(str);
+                inverter[0].inv_w_current /= 10;
+                
+                rx_seq0 = 0;
+            }           
+            break;   
+                        
+        case 131:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+            } else if (rxdata == '6') {
+            	rx_seq0 = 133;
+         	} else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 132:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 21) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];str[3]=rxbuff[7];
+                inverter[0].inv_u_current = atoi(str);
+                inverter[0].inv_u_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[9];str[1]=rxbuff[10];str[2]=rxbuff[11];str[3]=rxbuff[12];
+                inverter[0].inv_v_current = atoi(str);
+                inverter[0].inv_v_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[14];str[1]=rxbuff[15];str[2]=rxbuff[16];str[3]=rxbuff[17];
+                inverter[0].inv_w_current = atoi(str);
+                inverter[0].inv_w_current /= 10;
+                
+                rx_seq0 = 0;
+            }           
+            break;      
+        case 133:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 26) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];str[3]=rxbuff[7];
+                inverter[0].inv_u_current = atoi(str);
+                inverter[0].inv_u_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[9];str[1]=rxbuff[10];str[2]=rxbuff[11];str[3]=rxbuff[12];
+                inverter[0].inv_v_current = atoi(str);
+                inverter[0].inv_v_current /= 10;            
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[14];str[1]=rxbuff[15];str[2]=rxbuff[16];str[3]=rxbuff[17];
+                inverter[0].inv_w_current = atoi(str);
+                inverter[0].inv_w_current /= 10;
+                
+                rx_seq0 = 0;
+            }           
+            break;      
+
+        //ST-4      
+        case 40:
+        	if (rxdata == '1') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 41:
+        	if (rxdata == '6') {
+            	rx_seq0++;
+        	} else if (rxdata == '9') {
+            	rx_seq0 = 142;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 42:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 16) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];str[3]=rxbuff[7];
+                inverter[0].power_inv_day_total = atoi(str);            
+                inverter[0].power_inv_day_total /= 10;                               
+                inverter[0].power_inv_now = inverter[0].power_inv_day_total * 10;       
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[9];str[1]=rxbuff[10];str[2]=rxbuff[11];str[3]=rxbuff[12];str[4]=rxbuff[13];str[5]=rxbuff[14];str[6]=rxbuff[15]; 
+                if (atol(str) > 0) {
+	                inverter[0].power_inv_total = atol(str);            
+    			}
+                sendInverterCount[0] = 0;
+                buzzer_flag |= BUZZER_TIC;
+                put_str(4,16,C_RXOK,1);   
+                rx_led_delay = 2500;
+                           
+
+                rx_seq0 = 0;
+            }           
+            break; 
+                 
+        case 142:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 19) {
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[4];str[1]=rxbuff[5];str[2]=rxbuff[6];str[3]=rxbuff[7];
+                inverter[0].power_inv_day_total = atoi(str);            
+                inverter[0].power_inv_day_total /= 10;                               
+                inverter[0].power_inv_now = inverter[0].power_inv_day_total * 10;       
+//                inverter[0].power_inv_now = inverter[0].power_inv_day_total;       
+                
+                memset(str,0,sizeof(str));
+                str[0]=rxbuff[9];str[1]=rxbuff[10];str[2]=rxbuff[11];str[3]=rxbuff[12];str[4]=rxbuff[13];str[5]=rxbuff[14];str[6]=rxbuff[15];
+                if (atol(str) > 0) {
+                	inverter[0].power_inv_total = atol(str);
+                }            
+                sendInverterCount[0] = 0;
+                buzzer_flag |= BUZZER_TIC;
+                put_str(4,16,C_RXOK,1);   
+                rx_led_delay = 2500;
+
+
+                rx_seq0 = 0;
+            }           
+            break;          
+
+        //ST-6      
+        case 60:
+        	if (rxdata == '0') {
+            	rx_seq0++;
+        	} else if (rxdata == '1') {
+            	rx_seq0 = 161;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 61:
+        	if (rxdata == '9') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 62:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 9) {                   
+                inverter[0].inverter_status[0] = rxbuff[4] - 0x30;
+                inverter[0].inverter_status[1] = rxbuff[6] - 0x30;
+                inverter[0].inverter_status[2] = rxbuff[8] - 0x30;
+                inverter[0].inverter_status[3] = 0;
+
+					buzzer_flag |= BUZZER_TIC;
+                    put_str(4,16,C_RXOK,1);   
+					rx_led_delay = 2500;
+
+                rx_seq0 = 0;
+            }           
+            break; 
+                       
+        case 161:
+        	if (rxdata == '2') {
+            	rx_seq0++;
+            } else {
+            	rx_seq0 = 0;
+            }               
+            break;      
+        case 162:
+            rxbuff[rcnt] = rxdata;
+            rcnt++;
+            if (rcnt == 12) {                   
+                inverter[0].inverter_status[0] = rxbuff[4] - 0x30;
+                inverter[0].inverter_status[1] = rxbuff[6] - 0x30;
+                inverter[0].inverter_status[2] = rxbuff[8] - 0x30;
+                inverter[0].inverter_status[3] = 0;
+
+					buzzer_flag |= BUZZER_TIC;
+                    put_str(4,16,C_RXOK,1);   
+					rx_led_delay = 2500;
+
+//	                sprintf(str,"%5dmWh ",inverter[0].power_inv_total/1000);
+//				    put_str(5,8,str,1);
+
+
+                rx_seq0 = 0;
+            }           
+            break;      
+
+		//System Setting /////////////////////////////////////            
+		case 200:               
+            rcnt = 0;
+            if (rxdata == 0xa5) {			//RD_DATA
+                rx_seq0 = 220;
+            } else if (rxdata == 0xaa) {	//WR_DATA
+				rcnt = 0;
+                rx_seq0 = 210;      
+            } else {
+                rx_seq0 = 0;
+            }
+			break;
+		case 210:  	//WR_DATA
+			rxbuff[rcnt++] = rxdata;
+			if (rcnt == 5) {
+				rx_seq0++;
+			}			
+			break;  
+			     
+		case 211:  
+			if (rxdata == 0x03) {
+				rx_seq0++;
+			} else {
+				rx_seq0 = 0;
+			}  
+			break;
+		case 212:  
+			if (rxdata == 0x0d) {   
+				eePortNumber = rxbuff[0] * 0x100 + rxbuff[1];
+				eeSendDelay = rxbuff[2] * 0x100 + rxbuff[3]; 
+                eeSendDelay *= 1000; 
+                eeInverterCount = rxbuff[4];
+			    sprintf(str,"%04d", eePortNumber);
+				put_str(1,6,str,2);            
+    sprintf(str,"%01X", eeInverterCount);
+    put_str(7,18,str,1);
+                
+            	//send_system_parameter();   
+				buzzer_flag |= BUZZER_TIC;
+			}
+			rx_seq0 = 0;         
+			break;
+			
+			
+		case 220:  
+			if (rxdata == 0x03) {
+				rx_seq0++;
+			} else {
+				rx_seq0 = 0;
+			}  
+			break;
+		case 221:  
+			if (rxdata == 0x0d) {
+            	send_system_parameter();   
+				buzzer_flag |= BUZZER_TIC;
+			}
+			rx_seq0 = 0;         
+			break;
+		default:
+			rx_seq0 = 0;
+			break;
+	}
+		
+
+}
+

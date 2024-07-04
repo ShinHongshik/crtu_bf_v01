@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceInsightBookmarks
+	AppVer="4.00.0084"
+	AppVerMinReader="4.00.0009"
+	>
+	<Bookmarks>
+		<Mark
+			Name="1436276750905030604202"
+			Comment="main"
+			File="..\src\main.c"
+			Line="115"
+			Column="4"
+			Symbol="main"
+			SymbolInstance="0"
+			SymbolType="Function"
+			LineOffset="0"
+			/>
+	</Bookmarks>
+</SourceInsightBookmarks>
