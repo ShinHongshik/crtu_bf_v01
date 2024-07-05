@@ -275,8 +275,8 @@ void Paint_plug_l(void){
 }
 
 
-extern char gFlcdIni ;
 extern void drv_lcd_1in5_oled(void){
+	static char gFlcdIni = 0 ;
 	static int sDlSqc = 0;
 	static int cnt =0;
 	static int num = 0 ;

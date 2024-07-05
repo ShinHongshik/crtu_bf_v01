@@ -24,6 +24,7 @@ typedef unsigned int WORD;
 
 #define sbi(x,y) (x|=(1<<y))
 #define cbi(x,y) (x&=~(1<<y))
+#define isb(x,y) (x && (1<<y))
 #define bv(bit)	 (1 << (bit))
 #define ABS(x)		((x>0)?(x):(-x))
 #define DEC(a) if((a)>0) a--

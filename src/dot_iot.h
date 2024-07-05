@@ -42,7 +42,7 @@ extern char gImd_reaction;
 
 extern char	gdataSaveFlag; 
 extern char	gdataLoadFlag; 
-extern char gFlcdIni ;
+
 //----------------------------------
 extern char txdataInv[];
 extern char txdataIot[];

@@ -81,7 +81,7 @@ void gpio_callback(uint gpio, uint32_t events){
  char   gNewCharInFlag = 0;
  //---------------------
  char gfLcdRefash = 0;
- char   gFlcdIni = 0;
+
  ui16 gflcdsleep_n = 0;
  
  char   gfUse_iot = 0;
@@ -173,7 +173,7 @@ int main() {
 	i2c_ini_dot();
 	adc_ini_crtu();
 	load_eep_page();
-
+	cdcd_init();
 	
 	itrt_cnt = 0;
 	gpio_set_irq_enabled_with_callback(22, GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
@@ -230,6 +230,7 @@ int main() {
     drv_eep_at24c128();
     drv_lcd_1in5_oled();
     opr_send485tx();
+
 		
     }
 }
@@ -262,7 +263,7 @@ void pwrsw_check(void){
 			if(gNowtemp > -30.0f) sqc_pc.sqc++;
 			break;
 		case 4:
-			if(gFlcdIni == 0)gFlcdIni = 1;
+			sbi( gResetSw , LCD_RSW );
 			sqc_pc.sqc = 0;
 		default:
 			sqc_pc.sqc = 0;
@@ -304,7 +305,7 @@ void black_out_check(void){
 		case 2:  
 			// go lcd sleep 
 			if(gfBlackOut == 0) sqc_boc = 0 ;
-			gFlcdIni = 1;
+			sbi(gResetSw, LCD_RSW);
 		break;
 		default:
 		break;	
@@ -950,6 +951,15 @@ void proc_1ms_tic(void) // no intterupt
 			gpio_put(HW_WATCHDOG, ON);
 	else 
 			gpio_put(HW_WATCHDOG, OFF);	
+	if(gResetSw && bv(SYSTEM_RSW)){
+		printf("NowSystem reset....");
+		cbi(gResetSw ,SYSTEM_RSW);
+		cdcd_reset(0);
+		watchdog_enable(100, 1);
+		while(1);
+	}
+
+	
 
   if(tic_60s++ < 59) return;
 	tic_60s = 0;

@@ -1,14 +1,7 @@
----- gFlcdIni Matches (14 in 5 files) ----
-Cmd_judge in dot_iot.c (src) : 				  	gFlcdIni = 1;
-Cmd_judge_usb in dot_iot.c (src) : 										gFlcdIni = 1;
-dot_iot.h (src) line 45 : extern char gFlcdIni ;
-main.c (src) line 84 :  char   gFlcdIni = 0;
-pwrsw_check in main.c (src) : 			if(gFlcdIni == 0)gFlcdIni = 1;
-black_out_check in main.c (src) : 			gFlcdIni = 1;
-OLED_1in5_rgb_test.c (src) line 278 : extern char gFlcdIni ;
-drv_lcd_1in5_oled in OLED_1in5_rgb_test.c (src) : 			if(gFlcdIni == 1){ 
-drv_lcd_1in5_oled in OLED_1in5_rgb_test.c (src) : 				gFlcdIni= 0;
-OLED_1in5_test.c (src) line 278 : extern char gFlcdIni ;
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(gFlcdIni == 1)	sDlSqc = 14; 
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(gFlcdIni == 1){ 
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 				gFlcdIni= 0;
+---- drv_lcd_1in5_oled Matches (6 in 4 files) ----
+hs_global.h (src) line 362 : extern void drv_lcd_1in5_oled(void);
+main.c (src) line 37 : extern void drv_lcd_1in5_oled(void);
+main in main.c (src) :     drv_lcd_1in5_oled();
+OLED_1in5_rgb_test.c (src) line 51 : void drv_lcd_1in5_oled(void);
+OLED_1in5_rgb_test.c (src) line 278 : extern void drv_lcd_1in5_oled(void){
+OLED_1in5_test.c (src) line 51 : void drv_lcd_1in5_oled(void);
