@@ -156,19 +156,18 @@ int main() {
 	gSysCnt = 0;
 	alarm_in_us(1000000 * 2);
 	gflcdsleep_n = 3000;
+  uart_ini_rx_int();
 //----------------ini-------------------------------------	
 	//const uint i2c_default = i2c1_inst ;
 	stdio_init_all();
-    gpio_init(LED_PIN);
-    gpio_set_dir(LED_PIN, GPIO_OUT);
-	gpio_init(HW_WATCHDOG);
-	gpio_set_dir(HW_WATCHDOG, GPIO_OUT);
+  gpio_init(LED_PIN);
+  gpio_set_dir(LED_PIN, GPIO_OUT);
 	
     tx_onoff485(INIT);
     tx_onoff485(OFF);
 
 	sbi(gfSystem_state,PORTINIT_IS);
-  uart_ini_rx_int();
+
 	sbi(gfSystem_state,UART_IS);
 	spi_ini_dot();
 	i2c_ini_dot();
@@ -180,19 +179,9 @@ int main() {
 	gpio_set_irq_enabled_with_callback(22, GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
 	
 
-	if(dbgLevel > 0){
-	// Send out a character without any conversions
-	uart_putc_raw(UART_ID_0, 'A');
-	// Send out a character but do CR/LF conversions
-	uart_putc(UART_ID_0, 'B');
-	// Send out a string, with CR/LF conversions
-	uart_puts(UART_ID_0, " Hello, UART!\n");
-
-	printf("Hello, world!\n");
-	//uart_tx_program_init(pio, sm, offset, PIN_TX, SERIAL_BAUD);
-	}
-	
 	//uart_puts(UART_ID_0, " Hello, UART!\n");
+	gpio_init(HW_WATCHDOG);
+	gpio_set_dir(HW_WATCHDOG, GPIO_OUT);
 
    while (true) {
         //---------- 1ms tic --call back int.---------------- 
@@ -1015,6 +1004,16 @@ void showHL(void)	{
 		 
 		
 			switch(dbgLevel){
+					case 5:
+						// Send out a character without any conversions
+						uart_putc_raw(UART_ID_0, '0');
+						// Send out a character but do CR/LF conversions
+						uart_putc(UART_ID_1, '1');
+						// Send out a string, with CR/LF conversions
+						printf("Hello, world!\n");
+						//uart_tx_program_init(pio, sm, offset, PIN_TX, SERIAL_BAUD);
+						
+						break;
 					case 4:  
 							//uart_putc_raw(UART_ID_0, '0');
 							if(dbgLevel > 4){
@@ -1024,21 +1023,23 @@ void showHL(void)	{
 							break;
 					case 3:
 								if(dbgLevel > 4 ){ 
-											sprintf(txdataIot,"test1");
-											my_puts_string(ToIot );
+								sprintf(txdataIot,"test1");
+								my_puts_string(ToIot );
 								}
 					case 2:
 							//printf("%s","test_d\r\n");
-					case 1: 	
-					default:
+					case 1:
 							sprintf(txdatadbg,"\r\n[%02d:%03d:%02d:%02d:%02d]",year,day,TT,mimu,sec);
 							if(gkey != NO_KEY){
 								my_puts_string(ToDbg);
 								sprintf(txdatadbg,"KEYON:%X",gkey);
 								gkey = NO_KEY;
 							}
-								
 							my_puts_string(ToDbg);
+					case 0:
+					break;	
+					default:
+							DEC(dbgLevel);
 							//sprintf(txdataIot,"[%02d:%03d:%02d:%02d:%02d]\r\n",year,day,TT,mimu,sec);
 							//my_puts_string(ToIot);
 							opr_show=0;
