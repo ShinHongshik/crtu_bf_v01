@@ -1,13 +1,8 @@
 *.a
-
 !lib.a
-
-build/
-
-SI/
-
 *~
 
+SI/
 .vscode/
-
+build/
 tools/
