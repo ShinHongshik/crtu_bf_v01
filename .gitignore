@@ -2,3 +2,11 @@ SI/
 .vscode/
 build/
 tools/
+/build
+/build/.cmake
+/build
+/build/.cmake/api/v1/reply
+/build/.cmake/api/v1
+/build/.cmake/api
+/build/.cmake
+*.json
