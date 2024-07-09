@@ -10,3 +10,4 @@ tools/
 /build/.cmake/api
 /build/.cmake
 *.json
+/build
