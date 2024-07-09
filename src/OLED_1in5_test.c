@@ -49,6 +49,7 @@
 extern void gpio_hs (const uint gpNum, char onoff );
 extern void OLED_1in5_Display(UBYTE *Image);
 void drv_lcd_1in5_oled(void);
+void flcd_refrash(void);
 
 
 
@@ -379,15 +380,7 @@ extern void drv_lcd_1in5_oled(void){
 			Paint_DrawString_EN(10, 92, "soul_energy", &Font16, 0x2, 0xc);
 			Paint_DrawNum(10, 100, 123.456789, &Font8, 4, 0x3, 0xd);
 			Paint_DrawNum(10, 116, 987654, &Font12, 5, 0x4, 0xe);
-			Paint_DrawRectangle(80, 12, 90, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-			Paint_DrawRectangle(60, 12, 70, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-			
-			Paint_DrawRectangle(110, 5, 120, 10, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-			Paint_DrawRectangle(110, 12, 120, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-			Paint_DrawRectangle(110, 15, 120, 20, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-			
-			Paint_DrawRectangle(1, 1, 128, 128, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
-			Paint_plug_l();
+	
 			// Show image on page2
 			OLED_1in5_Display_test(BlackImage);
 			cnt = gSysCnt;
@@ -405,7 +398,7 @@ extern void drv_lcd_1in5_oled(void){
 			break;
 		case 11:
 			gfLcdRefash = 0;
-//			flcd_refrash();
+			flcd_refrash();
 			sDlSqc = 10; 
 			break;
 		case 12:
@@ -429,5 +422,19 @@ extern void drv_lcd_1in5_oled(void){
 				}
 		break;
 	}
+}
+
+
+void flcd_refrash(void){
+		Paint_DrawRectangle(80, 12, 90, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+		Paint_DrawRectangle(60, 12, 70, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+		Paint_DrawRectangle(110, 5, 120, 10, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+		Paint_DrawRectangle(110, 12, 120, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+		Paint_DrawRectangle(110, 15, 120, 20, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
+		Paint_DrawRectangle(1, 1, 128, 128, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
+		Paint_plug_l();
+		Paint_DrawString_EN(10, 80, "i_love_U", &Font12, 0x1, 0xb);
+		Paint_DrawString_EN(10, 92, "soul_energy", &Font16, 0x2, 0xc);
+		//OLED_1in5_Display_test(BlackImage);
 }
 

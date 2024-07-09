@@ -3,20 +3,25 @@
 
 cmake_minimum_required(VERSION 3.5)
 
+# If CMAKE_DISABLE_SOURCE_CHANGES is set to true and the source directory is an
+# existing directory in our source tree, calling file(MAKE_DIRECTORY) on it
+# would cause a fatal error, even though it would be a no-op.
+if(NOT EXISTS "D:/pico/pico-sdk/tools/elf2uf2")
+  file(MAKE_DIRECTORY "D:/pico/pico-sdk/tools/elf2uf2")
+endif()
 file(MAKE_DIRECTORY
-  "C:/Users/ShinHongShik/Documents/Pico/pico-sdk/tools/elf2uf2"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2/tmp"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2/src/ELF2UF2Build-stamp"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2/src"
-  "C:/rp2040/crtu_bf_v01/build/elf2uf2/src/ELF2UF2Build-stamp"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/tmp"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/src/ELF2UF2Build-stamp"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/src"
+  "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/src/ELF2UF2Build-stamp"
 )
 
 set(configSubDirs )
 foreach(subDir IN LISTS configSubDirs)
-    file(MAKE_DIRECTORY "C:/rp2040/crtu_bf_v01/build/elf2uf2/src/ELF2UF2Build-stamp/${subDir}")
+    file(MAKE_DIRECTORY "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/src/ELF2UF2Build-stamp/${subDir}")
 endforeach()
 if(cfgdir)
-  file(MAKE_DIRECTORY "C:/rp2040/crtu_bf_v01/build/elf2uf2/src/ELF2UF2Build-stamp${cfgdir}") # cfgdir has leading slash
+  file(MAKE_DIRECTORY "D:/rp2040/crtu_bf_v01_g/build/elf2uf2/src/ELF2UF2Build-stamp${cfgdir}") # cfgdir has leading slash
 endif()

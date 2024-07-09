@@ -155,7 +155,7 @@ int main() {
 	alarm_fired = false;
 	gSysCnt = 0;
 	alarm_in_us(1000000 * 2);
-	gflcdsleep_n = 3000;
+	gflcdsleep_n = 1000;
   uart_ini_rx_int();
 //----------------ini-------------------------------------	
 	//const uint i2c_default = i2c1_inst ;
@@ -191,7 +191,7 @@ int main() {
             gSysCnt++;
      	}
      //---sys handle-----------------------------------------------
-       proc_1ms_tic();
+     proc_1ms_tic();
 	   on_uart_rx_0();	 
 	   on_uart_rx_1();	
 	   on_stdio_usb_rx();
@@ -282,7 +282,7 @@ void vib_check(void){
 
 	if(itrt_cnt > 5){
 		printf("%d/1s_vib!!",itrt_cnt);
-		gflcdsleep_n = 3000;
+		gflcdsleep_n = 600;
 	}	
 	itrt_cnt = 0;
 };
@@ -299,7 +299,6 @@ void black_out_check(void){
 			if(gfBlackOut == 1) sqc_boc++;
 		break;	
 		case 1:
-			DEC(gflcdsleep_n);
 			if(gfBlackOut == 0) sqc_boc++;
 		break;	
 		case 2:  
@@ -1039,7 +1038,7 @@ void showHL(void)	{
 					case 2:
 							//printf("%s","test_d\r\n");
 					case 1:
-							sprintf(txdatadbg,"\r\n[%02d:%03d:%02d:%02d:%02d]",year,day,TT,mimu,sec);
+							sprintf(txdatadbg,"\r\n[%02d:%03d:%02d:%02d:%02d,%d]",year,day,TT,mimu,sec,gflcdsleep_n);
 							if(gkey != NO_KEY){
 								my_puts_string(ToDbg);
 								sprintf(txdatadbg,"KEYON:%X",gkey);
