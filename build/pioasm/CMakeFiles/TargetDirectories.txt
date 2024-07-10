@@ -1,3 +1,3 @@
-D:/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/pioasm.dir
-D:/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/edit_cache.dir
-D:/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/rebuild_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/pioasm.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/edit_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/pioasm/CMakeFiles/rebuild_cache.dir

@@ -1,5 +1,5 @@
-D:/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/elf2uf2.dir
-D:/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/edit_cache.dir
-D:/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/rebuild_cache.dir
-D:/rp2040/crtu_bf_v01_g/build/elf2uf2/boot_uf2_headers/CMakeFiles/edit_cache.dir
-D:/rp2040/crtu_bf_v01_g/build/elf2uf2/boot_uf2_headers/CMakeFiles/rebuild_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/elf2uf2.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/edit_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/elf2uf2/CMakeFiles/rebuild_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/elf2uf2/boot_uf2_headers/CMakeFiles/edit_cache.dir
+D:/pico/rp2040/crtu_bf_v01_g/build/elf2uf2/boot_uf2_headers/CMakeFiles/rebuild_cache.dir

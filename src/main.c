@@ -950,15 +950,19 @@ void proc_1ms_tic(void) // no intterupt
 			gpio_put(HW_WATCHDOG, ON);
 	else 
 			gpio_put(HW_WATCHDOG, OFF);	
+	
 	if(gResetSw && bv(SYSTEM_RSW)){
-		printf("NowSystem reset....");
+		printf("NowSystem reset....");	
+		my_puts_string(ToIot);
 		cbi(gResetSw ,SYSTEM_RSW);
 		cdcd_reset(0);
 		watchdog_enable(100, 1);
 		while(1);
 	}
-
 	
+	
+	sprintf(txdataIot,"TEST!iot");
+	my_puts_string(ToIot);
 
   if(tic_60s++ < 59) return;
 	tic_60s = 0;
