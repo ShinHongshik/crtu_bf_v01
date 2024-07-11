@@ -276,15 +276,49 @@ void vib_check(void){
 	static int itrt_cnt_old =0;
 	static int interv = 1000;
 	static uc08 sqc_vc = 0;
+	static uc08 long_check = 0 ;
 
-	if((gSysCnt - itrt_cnt_old) < 1000 ) return;
-	itrt_cnt_old  = gSysCnt; 
+	if((gSysCnt - itrt_cnt_old) < 500 ) return;
+	itrt_cnt_old  = gSysCnt;
 
-	if(itrt_cnt > 5){
-		printf("%d/1s_vib!!",itrt_cnt);
-		gflcdsleep_n = 600;
-	}	
-	itrt_cnt = 0;
+	switch(sqc_vc){
+		case 0:
+			if(itrt_cnt > 4) sqc_vc++;
+			itrt_cnt = 0;
+			long_check = 5;
+		break;
+		case 1:
+			if(itrt_cnt > 4){ 
+				itrt_cnt = 0;
+				DEC(long_check); 	
+				if(long_check == 0) sqc_vc++;
+			}else{
+			  sqc_vc++;
+			} 
+		break;
+		case 2:
+			if(long_check < 4 ){
+				printf("%d/long_vib!!",long_check);
+				sbi(gResetSw,LCD_RSW);
+			}	
+			else{
+				printf("%d/1s_vib!!",long_check);
+				gflcdsleep_n = 600;
+			}	
+			sqc_vc++;
+		break;
+		case 3:   // stable check
+			if(itrt_cnt > 3){
+			  itrt_cnt = 0;	
+			  long_check++;
+			}else  sqc_vc++;
+			if(long_check > 10) printf("%d/check_vib!!");
+		break;	
+		default:
+			sqc_vc = 0;
+		break;
+	}
+	
 };
 
 void black_out_check(void){
