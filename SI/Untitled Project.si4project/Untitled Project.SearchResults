@@ -1,7 +1,16 @@
----- drv_lcd_1in5_oled Matches (6 in 4 files) ----
-hs_global.h (src) line 362 : extern void drv_lcd_1in5_oled(void);
-main.c (src) line 37 : extern void drv_lcd_1in5_oled(void);
-main in main.c (src) :     drv_lcd_1in5_oled();
-OLED_1in5_rgb_test.c (src) line 51 : void drv_lcd_1in5_oled(void);
-OLED_1in5_rgb_test.c (src) line 278 : extern void drv_lcd_1in5_oled(void){
-OLED_1in5_test.c (src) line 51 : void drv_lcd_1in5_oled(void);
+---- gResetSw Matches (15 in 4 files) ----
+Cmd_judge in dot_iot.c (src) : 								sbi(gResetSw, LORA_RSW); 
+Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, LCD_RSW);
+Cmd_judge_usb in dot_iot.c (src) : 									  sbi(gResetSw, LORA_RSW);
+Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, IOT_RSW);
+Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, SYSTEM_RSW);
+hs_global.h (src) line 380 : extern int gResetSw;
+main.c (src) line 66 :  int  gResetSw =0;
+pwrsw_check in main.c (src) : 			sbi( gResetSw , LCD_RSW );
+vib_check in main.c (src) : 				sbi(gResetSw,LCD_RSW);
+black_out_check in main.c (src) : 			sbi(gResetSw, LCD_RSW);
+proc_1ms_tic in main.c (src) : 	if(gResetSw && bv(SYSTEM_RSW)){
+proc_1ms_tic in main.c (src) : 		cbi(gResetSw ,SYSTEM_RSW);
+drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(isb(gResetSw,LCD_RSW))sDlSqc = 14; 
+drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(isb(gResetSw,LCD_RSW)){ 
+drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 				cbi(gResetSw, LCD_RSW);

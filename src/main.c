@@ -278,17 +278,17 @@ void vib_check(void){
 	static uc08 sqc_vc = 0;
 	static uc08 long_check = 0 ;
 
-	if((gSysCnt - itrt_cnt_old) < 500 ) return;
+	if((gSysCnt - itrt_cnt_old) < 400 ) return;
 	itrt_cnt_old  = gSysCnt;
 
 	switch(sqc_vc){
 		case 0:
-			if(itrt_cnt > 4) sqc_vc++;
+			if(itrt_cnt > 3) sqc_vc++;
 			itrt_cnt = 0;
 			long_check = 5;
 		break;
 		case 1:
-			if(itrt_cnt > 4){ 
+			if(itrt_cnt > 3){ 
 				itrt_cnt = 0;
 				DEC(long_check); 	
 				if(long_check == 0) sqc_vc++;
@@ -985,7 +985,7 @@ void proc_1ms_tic(void) // no intterupt
 	else 
 			gpio_put(HW_WATCHDOG, OFF);	
 	
-	if(gResetSw && bv(SYSTEM_RSW)){
+	if(isb(gResetSw, SYSTEM_RSW)){
 		printf("NowSystem reset....");	
 		my_puts_string(ToIot);
 		cbi(gResetSw ,SYSTEM_RSW);
