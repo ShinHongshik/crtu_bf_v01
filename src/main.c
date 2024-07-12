@@ -138,7 +138,7 @@ extern uint8_t addr_24c_high;
 const float conversionFactor = 3.3f / (1 << 12);
 
 enum OPR_STAS{OPR_ON_IS,SYSPOWER_IS,PORTINIT_IS,VALLOAD_IS,SYSTIMER_IS
-	,UART_IS,I2C_IS,SPISET_IS,LCDSET_IS,ADC_IS};
+	,UART_IS,I2C_IS,SPISET_IS,LCDSET_IS,ADC_IS,EXPOWER_IS};
 int gfSystem_state = 0 ;
  
 int main() {
@@ -224,7 +224,6 @@ int main() {
     
     pwrsw_check(); //  pwr off  -> on :  lcd ini at usb used 
     vib_check();
-		black_out_check();
     drv_key_check();
 		drv_adc_internal();
     drv_eep_at24c128();
@@ -249,7 +248,7 @@ void pwrsw_check(void){
 	
 	switch(sqc_pc.sqc){
 		case 0: // wait_boot on 
-			sqc_pc.delay = 5000;
+			sqc_pc.delay = 3000;
 			sqc_pc.sqc++;
 			break;
 		case 1:
@@ -257,10 +256,10 @@ void pwrsw_check(void){
 			sqc_pc.sqc++;
 			break;
 		case 2:	
-			if(gNowtemp < -30.0f) sqc_pc.sqc++;
+			if(isb(gfSystem_state , SYSPOWER_IS) == 0)	sqc_pc.sqc++;
 			break;
 		case 3:
-			if(gNowtemp > -30.0f) sqc_pc.sqc++;
+			if(isb(gfSystem_state , SYSPOWER_IS))	sqc_pc.sqc++;
 			break;
 		case 4:
 			sbi( gResetSw , LCD_RSW );
@@ -321,30 +320,6 @@ void vib_check(void){
 	
 };
 
-void black_out_check(void){
-	static int sqc_boc = 0;
-	static int cnt_boc = 0;
-	
-	if((gSysCnt - cnt_boc) < 1000 ) return;
-	cnt_boc  = gSysCnt; 
-
-	switch(sqc_boc){
-		case 0:
-			if(gfBlackOut == 1) sqc_boc++;
-		break;	
-		case 1:
-			if(gfBlackOut == 0) sqc_boc++;
-		break;	
-		case 2:  
-			// go lcd sleep 
-			if(gfBlackOut == 0) sqc_boc = 0 ;
-			sbi(gResetSw, LCD_RSW);
-		break;
-		default:
-		break;	
-	}
-
-}
 
 
 
@@ -521,7 +496,7 @@ void drv_adc_internal(void){
 	float volt,batt,temp,BL_L;
 	static int bl_cnt = 0;
 	
-	if((gSysCnt - tmp_cnt) < 100) return;
+	if((gSysCnt - tmp_cnt) < 50) return;
 	tmp_cnt = gSysCnt;
 
 	switch(sqc_ai){
@@ -563,17 +538,19 @@ void drv_adc_internal(void){
 			gNowBattLv = cal_btl(volt);
 			volt = avg_val[2] * conversion_factor;
 			gNowBLack_V = volt;
-			printf("batt: %0.2f, BL : %0.2f V , tmp:%0.2f \n",gNowBattLv, gNowBLack_V, gNowtemp);
 			
-			if(gNowBLack_V > 1) bl_cnt++;
-			else DEC(bl_cnt);
-			if(bl_cnt > 5) gfBlackOut = 1;
-			else gfBlackOut = 0;
+			if(gNowBLack_V > 1.0f) cbi(gfSystem_state , EXPOWER_IS);
+			else sbi(gfSystem_state , EXPOWER_IS);
+
+			if(gNowtemp < -40)	
+				cbi(gfSystem_state , SYSPOWER_IS );
+			else sbi(gfSystem_state , SYSPOWER_IS ); 
 			
 			sqc_ai++;			
 		break;	
 		case 5:	
-			if(i-- == 0) sqc_ai = 0;
+			i = 0;
+			sqc_ai = 0;			
 		break;	
 		default:
 			adc_gpio_init(26);
@@ -1077,12 +1054,16 @@ void showHL(void)	{
 							//printf("%s","test_d\r\n");
 					case 1:
 							sprintf(txdatadbg,"\r\n[%02d:%03d:%02d:%02d:%02d,%d]",year,day,TT,mimu,sec,gflcdsleep_n);
+					
 							if(gkey != NO_KEY){
 								my_puts_string(ToDbg);
 								sprintf(txdatadbg,"KEYON:%X",gkey);
 								gkey = NO_KEY;
 							}
 							my_puts_string(ToDbg);
+
+							printf("batt: %0.2f, BL : %0.2f V , tmp:%0.2f \n",gNowBattLv, gNowBLack_V, gNowtemp);
+							
 					case 0:
 					break;	
 					default:

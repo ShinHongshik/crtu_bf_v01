@@ -285,20 +285,22 @@ extern void drv_lcd_1in5_oled(void){
 	
 	switch(sDlSqc){
 		case 0:  // wait Sys stable
-			if((gSysCnt - cnt) < 1500) break;
-			printf("1.5inch RGB OLED test demo\n");
+			if((gSysCnt - cnt) < 1200) break;
+			cnt = gSysCnt;
+		
 			
 			DEV_GPIO_Init_h();
 //			dev_select_cs1(SELDEV_LCD);
 			
 			//DEV_HARDWARE_SPI_b1egin("/dev/spidev0.0");
 			OLED_Reset(1);
-			cnt = gSysCnt;
+			
 			sDlSqc++;
 			break;
 		case 1:
 			if((gSysCnt - cnt) < 200) break;
 			cnt = gSysCnt;
+		  printf("1.5inch RGB OLED test demo\n");
 			OLED_Reset(0);
 			sDlSqc++;
 			break;
