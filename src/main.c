@@ -272,32 +272,35 @@ void pwrsw_check(void){
 		
 }
 void vib_check(void){
+	static int itrt_cnt_tic =0;
 	static int itrt_cnt_old =0;
 	static int interv = 1000;
 	static uc08 sqc_vc = 0;
-	static uc08 long_check = 0 ;
+	static uc08 long_check = 5 ;
 
-	if((gSysCnt - itrt_cnt_old) < 400 ) return;
-	itrt_cnt_old  = gSysCnt;
+
+	if((gSysCnt - itrt_cnt_tic) < 330 ) return;
+	itrt_cnt_tic  = gSysCnt;
 
 	switch(sqc_vc){
 		case 0:
-			if(itrt_cnt > 3) sqc_vc++;
-			itrt_cnt = 0;
-			long_check = 5;
+			if( itrt_cnt > 0){
+				sqc_vc++;
+				itrt_cnt_old = itrt_cnt;
+			}
 		break;
 		case 1:
-			if(itrt_cnt > 3){ 
-				itrt_cnt = 0;
-				DEC(long_check); 	
-				if(long_check == 0) sqc_vc++;
-			}else{
-			  sqc_vc++;
-			} 
+			if(itrt_cnt > itrt_cnt_old){ 
+				itrt_cnt_old = itrt_cnt;
+				DEC(long_check);
+				break;
+			}
+		  sqc_vc++;
 		break;
 		case 2:
 			if(long_check < 4 ){
 				printf("%d/long_vib!!",long_check);
+				if(isb(gResetSw,LCD_RSW) == 0)
 				sbi(gResetSw,LCD_RSW);
 			}	
 			else{
@@ -307,14 +310,18 @@ void vib_check(void){
 			sqc_vc++;
 		break;
 		case 3:   // stable check
-			if(itrt_cnt > 3){
-			  itrt_cnt = 0;	
-			  long_check++;
-			}else  sqc_vc++;
-			if(long_check > 10) printf("%d/check_vib!!");
+			if(itrt_cnt > itrt_cnt_old){
+			  itrt_cnt_old = itrt_cnt;
+				long_check++;
+				if(long_check > 10) printf("%d/check_vib!!");
+				break;
+			}
+			sqc_vc++;
 		break;	
 		default:
+		  itrt_cnt = 0;
 			sqc_vc = 0;
+			long_check = 5;
 		break;
 	}
 	

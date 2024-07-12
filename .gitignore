@@ -19,3 +19,8 @@ SI/Untitled Project.si4project/cache/parse/src_OLED_1in5_test.c.sisc
 /SI
 /SI/Untitled Project.si4project/cache
 /build
+*.uf2
+*.obj
+/build/CMakeFiles
+/build/CMakeFiles/prj_dot.dir/src
+/build/CMakeFiles/prj_dot.dir/src
