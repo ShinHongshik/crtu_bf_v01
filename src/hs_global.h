@@ -322,6 +322,8 @@ int reg_read(   i2c_inst_t *i2c,
 
 void my_puts_string(char port );
 void my_nputs_string (char port,char * cmdbuf, int length );
+uc08 Cmd_judge(char * dest);
+uc08 Cmd_judge_iot(char * dest);
 uc08 Cmd_judge_usb(char * dest);
 void drv_sendTcpControlM2M(void);
  void drv_sendTcpControlLTE(void);

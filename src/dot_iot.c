@@ -20,45 +20,35 @@ enum HS_CMD{
 	,MAX_NUM_FROMPCCMD
 };
 
+
 char *frompccmd_str_m2m[MAX_NUM_FROMPCCMD]=
 {
   //--------------lte--------------
   //--------------m2m--------------
    "no_cmd",              //	0     
-	 "\r\n",             //	1     
-	 "+QCDS: ",                //	2     
-	 "+CSQ: ",           //	3     
-	 "$v2t",          //	4     
+	 "\r\n",                //	     
+	 "+QCDS: ",             //	     
+	 "+CSQ: ",              //	     
+	 "$v2t",                //	     
 	 "APP RDY",             //	5     
-	 "+SKTOTA: ",           //	6     
-	 "+QIOPEN: 0,",         //	7     
-	 "set_iot",     //	8     
-	 "sendtpk",           //	9     
-	 "setmcno:",           //	10    
-	 "dbg",                //	11    
-	 "+WSOCO:",             //	12    
-	 "+WSOCR:",      //	13    
-	 "$$STAT:READY",    //	14    
-	 "+WDNSQ:0,",        //	15    
-	 "*SKT*READMT: ",             //	16    
-	 "+CMTI: ",            //	17    
-	 "+CMGR: ",             //	18    
-	 "*SMSALERT",           //	19    
-	 "+QIRD: ",             //	20    
-	 "+CCLK: ",              //	21  -- comm 
-	 "OK",                   // 22
-     "$save",				 // 23
-     "$load",				 //  24
-     "sev",					 //  25
-     "$ivmode", 		     // 26
-     "$lcdrst",				// 27
-     "reset run_boot ",       // 28
-     "$fi",						//29
-     "$srst",         //30 
-     "$scm",					//31
-     "$sto",         //32
-     "$lrst",         //33
-	 "help"                 //MAX_NUM_FROMPCCMD - 1
+	 "+SKTOTA: ",           //	     
+	 "+QIOPEN: 0,",         //	     
+	 "set_iot",     			  //	     
+	 "sendtpk",             //	     
+	 "setmcno:",            //	10    
+   "+WSOCO:",                       //	    
+   "+WSOCR:",            //	    
+   "$$STAT:READY",       //	    
+   "+WDNSQ:0,",          //	    
+   "*SKT*READMT: ",      //	15    
+   "+CMTI: ",            //	    
+   "+CMGR: ",            //	    
+   "*SMSALERT",          //	    
+   "+QIRD: ",            //	    
+   "+CCLK: ",            //	20    
+   "OK",                 //	
+   "help"                // 
+	       //MAX_NUM_FROMPCCMD - 1
 };
 
 enum HS_CMD_USB{ 
@@ -93,6 +83,54 @@ char *frompccmd_str_usb[MAX_NUM_FROMUSB]={
 };
 	
 
+enum HS_CMD_IOT{
+	 NOCMD_HSC_IOT = 0
+	,END_CHAR_HSC_IOT
+	,QCDS_HSC_IOT
+	,CSQ_HSC_IOT
+	,APP_RDY_HSC_IOT
+	,SKTOTA_HSC_IOT
+	,QIOPEN_HSC_IOT
+	,WSOCO_HSC_IOT
+	,WSOCR_HSC_IOT
+  ,STATE_READY_HSC_IOT 
+	,WDNSQ_HSC_IOT
+  ,SKT_READMT_HSC_IOT 
+  ,CMTI_HSC_IOT
+	,CMGR_HSC_IOT
+	,SMSALERT_HSC_IOT
+	,QIRD_HSC_IOT
+	,CCLK_HSC_IOT
+	,SYSRST_HSC_IOT
+	,OK_HSC_IOT
+	,HELP_HSC_IOT
+	,MAX_NUM_FROMIOTCMD
+};
+	 
+char *frompccmd_str_iot[MAX_NUM_FROMIOTCMD]={
+  //--------------lte--------------
+  //--------------m2m--------------
+   "no_cmd",              //	0     
+	 "\r\n",             		//	1     
+	 "+QCDS: ",             //	2     
+	 "+CSQ: ",           		//	3     
+	 "APP RDY",             //	4     
+	 "+SKTOTA: ",           //	5     
+	 "+QIOPEN: 0,",         //	     
+	 "+WSOCO:",             //	    
+	 "+WSOCR:",      				//	    
+	 "$$STAT:READY",  		  //	    
+	 "+WDNSQ:0,",        		//	10    
+	 "*SKT*READMT: ",       //	    
+	 "+CMTI: ",             //	    
+	 "+CMGR: ",             //	    
+	 "*SMSALERT",           //	    
+	 "+QIRD: ",             //	15    
+	 "+CCLK: ",             //
+	 "#5552FFFF*AA",				//
+	 "OK",                  //  
+	 "help"                 //  19
+};
 
 
 
@@ -198,7 +236,7 @@ uc08 Cmd_judge(char * dest){
             break;
           case 1:  // 0x0d0x0a -> not action 
             break;
-          case 3 :
+          case 2 :
                 strcpy(cmd_buf,subval_addr);
                 rssiLevel = atoi(cmd_buf );
                 //----------
@@ -440,6 +478,146 @@ uc08 Cmd_judge(char * dest){
       return 0;
 } 
 
+ 
+ 
+ uc08 Cmd_judge_iot(char * dest){
+	 char tcmd_code = 0;
+	 char tmp_c ;
+	 char cmd_buf[50] = {0};
+	 int subCmdValIndex = 0 , tmp_iii;
+	 ui16 tmp_i ;
+	 char gsktota ;
+	 char * addr = dest;
+	 char * subval_addr = dest;
+	 char i=0; 
+	 static char * dbgSendbuf = txdatadbg;
+	 static char dbgSndPort = ToDbg;
+	 int i2c_errcode ;
+	 sni buff = {0} ;
+	 
+	 // match 1cmd
+			 i	= (MAX_NUM_FROMPCCMD - 1);
+			 while(i)
+			 {
+				 //strcpyf(cmd_buf,frompccmd_str_m2m[i]);
+				 //subCmdValIndex = strcspn(frompccmd_str_m2m[i],srt_4comp_prompc);
+				 subCmdValIndex =  strlen(frompccmd_str_iot[i]);
+				 addr = dest;
+				 while(*addr){
+					if(*addr ==  *frompccmd_str_iot[i]) break;
+					addr++;
+				 } 
+				 if(strncmp(addr,frompccmd_str_iot[i],subCmdValIndex) == 0) break;
+				 DEC (i);
+			 }
+			 subval_addr = addr;
+			 while(subCmdValIndex--) subval_addr++;
+			 while(*subval_addr){
+				 if(*subval_addr != ' ')break;
+				 subval_addr++;
+			 } 
+ 
+			 //if((i != 11) && (dbgLevel == 0)) dbgSndPort = 0xff;
+ 
+			 switch(i){
+					 case NOCMD_HSC_IOT:
+								 sprintf(dbgSendbuf,"No_cmd,%d",i);
+								 my_puts_string (dbgSndPort);
+						 break;
+					 case END_CHAR_HSC_IOT:	// 0x0d0x0a -> not action 
+						 break;
+					 case QCDS_HSC_IOT :
+					 	 break;
+					 case CSQ_HSC_IOT:
+								 strcpy(cmd_buf,subval_addr);
+								 rssiLevel = atoi(cmd_buf );
+								 //----------
+								 sbi (iotState, CSQUERY_STIOT);
+								 sprintf(dbgSendbuf,"mCSQ->%d",rssiLevel);
+								 my_puts_string (dbgSndPort);
+						 break;
+ 					 case APP_RDY_HSC_IOT:
+								 sbi (iotState, APP_READY);
+						 break;
+					 case SKTOTA_HSC_IOT:
+								 strncpy(cmd_buf,subval_addr,3 );
+								 if((*subval_addr >= '0') && (*subval_addr < '9')){
+									 gsktota = (char)(atoi(subval_addr));
+									 if(gsktota > 9) gsktota = 9;
+								 }
+								 sprintf(dbgSendbuf,"skota=%d",gsktota);
+								 my_puts_string (ToIot);		 
+						 break;
+					 case QIOPEN_HSC_IOT:
+								 strncpy(cmd_buf,subval_addr,3 );
+								 if(*subval_addr == '0') {
+					 //fSoketOpend = 1;
+									 sprintf(dbgSendbuf,"QO=OK");
+									 my_puts_string (ToIot);
+								 }
+						 break;
+					 case WSOCO_HSC_IOT:
+					 case WSOCR_HSC_IOT:
+					 	 break;
+					 case STATE_READY_HSC_IOT:
+									 strncpy(cmd_buf,subval_addr,30 );
+									 
+									 if(cmd_buf[0] == '1'){
+										 sbi (iotState, DEVICE_READY_STIOT);
+										 i = 4;
+										 while(i--) subval_addr++;
+										 strcpy(ipAddress,cmd_buf+4);
+										 
+										 subval_addr = strtok (ipAddress ,"/\0"); 
+ 
+										 sprintf(dbgSendbuf," iP=%s",ipAddress);
+										 my_puts_string (dbgSndPort);
+									 }
+									 else{
+										 sprintf(dbgSendbuf,"s=%s",cmd_buf);
+										 my_puts_string (dbgSndPort);
+									 }
+						 break; 	
+					 case WDNSQ_HSC_IOT:
+					 	 break;
+					 case SKT_READMT_HSC_IOT:
+					 				sbi (iotState, DEVICE_READY_STIOT);
+					   break;
+					 case CMTI_HSC_IOT:
+					 case CMGR_HSC_IOT:	
+					 case SMSALERT_HSC_IOT:	
+					 case QIRD_HSC_IOT:
+					   break;
+					 case CCLK_HSC_IOT:
+								 strcpy(cmd_buf,subval_addr);
+								 //putchar2 (subCmdValIndex);
+								 get_time (cmd_buf);
+								 sprintf(dbgSendbuf,"%s",datetime);
+								 my_puts_string (dbgSndPort);
+						 break;
+					 case SYSRST_HSC_IOT:
+								 sbi(resetSw, SYSTEM_RSW);
+								 printf("sysreset.....");
+						 break;
+					 case OK_HSC_IOT:
+					 	 break;
+					 case (MAX_NUM_FROMIOTCMD - 1):
+							 i = 1;
+							 while(1){
+							 sprintf(dbgSendbuf,"\r\n%s",frompccmd_str_iot[i]);
+							 my_puts_string (dbgSndPort);
+							 i++;
+							 if(i >= (MAX_NUM_FROMIOTCMD -1))break;
+								 }
+						 break;
+					default:
+								 sprintf(dbgSendbuf,"num:[%0d,d_code:0x%02X\r\n]",i,subCmdValIndex);
+								 my_puts_string (dbgSndPort);
+						 break;
+				 }
+ 
+			 return 0;
+ } 
  
  
  uc08 Cmd_judge_usb(char * dest){

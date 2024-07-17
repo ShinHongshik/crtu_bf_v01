@@ -1,16 +1,7 @@
----- gResetSw Matches (15 in 4 files) ----
-Cmd_judge in dot_iot.c (src) : 								sbi(gResetSw, LORA_RSW); 
-Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, LCD_RSW);
-Cmd_judge_usb in dot_iot.c (src) : 									  sbi(gResetSw, LORA_RSW);
-Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, IOT_RSW);
-Cmd_judge_usb in dot_iot.c (src) : 										sbi(gResetSw, SYSTEM_RSW);
-hs_global.h (src) line 380 : extern int gResetSw;
-main.c (src) line 66 :  int  gResetSw =0;
-pwrsw_check in main.c (src) : 			sbi( gResetSw , LCD_RSW );
-vib_check in main.c (src) : 				sbi(gResetSw,LCD_RSW);
-black_out_check in main.c (src) : 			sbi(gResetSw, LCD_RSW);
-proc_1ms_tic in main.c (src) : 	if(gResetSw && bv(SYSTEM_RSW)){
-proc_1ms_tic in main.c (src) : 		cbi(gResetSw ,SYSTEM_RSW);
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(isb(gResetSw,LCD_RSW))sDlSqc = 14; 
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(isb(gResetSw,LCD_RSW)){ 
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 				cbi(gResetSw, LCD_RSW);
+---- CMTI_HSC_IOT Matches (2 in 1 files) ----
+HS_CMD_IOT in dot_iot.c (src) :   ,CMTI_HSC_IOT
+Cmd_judge_iot in dot_iot.c (src) : 					 case CMTI_HSC_IOT:
+---- CMTI_HSC_IOT Search Errors Encountered (2) ----
+The following 2 files could not be processed:
+C:\rp2040\pico-sdk\src\rp2040\hardware_regs\include\hardware\regs\dma.h : File could not be opened.
+C:\rp2040\pico-sdk\src\rp2040\hardware_regs\include\hardware\regs\pads_bank0.h : File could not be opened.

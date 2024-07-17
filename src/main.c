@@ -214,6 +214,7 @@ int main() {
 			rs_rece_uart0_iot();
 	 		drv_send_inv();
 	 	}
+		 
 //-----------------------------
 		rs_rece_usb_0();
 		rs_rece_uart1_inv();
@@ -942,24 +943,25 @@ void proc_1ms_tic(void) // no intterupt
 
   if(tic_10ms++ < 9) return;
   tic_10ms = 0;
-	//----proc 10ms -------- 
- 	
+//----proc 10ms ------------------------------- 
+
+//---------------------------------------------//
     
   if(proc_100ms++ < 9) return;
   proc_100ms = 0 ;
-	//----proc 100ms --------    
-  if(sledSW) {
-      gpio_put(LED_PIN, 1);
-      sledSW = 0;
-  }else{
-      sledSW = 1;
-      gpio_put(LED_PIN, 0);
-  }
-  
+		//----proc 100ms --------    
+	  if(sledSW) {
+	      gpio_put(LED_PIN, 1);
+	      sledSW = 0;
+	  }else{
+	      sledSW = 1;
+	      gpio_put(LED_PIN, 0);
+	  }
+//-----------------------------------------------//
   
   if(proc_1s++ < 9) return;
   proc_1s = 0;
-//----proc 1000ms --------  
+//--------proc 1000ms -------------------------------  
   gSysTimer++;
   DEC(gDbgFuseCnt);
 	DEC(gflcdsleep_n);
@@ -974,26 +976,25 @@ void proc_1ms_tic(void) // no intterupt
 		my_puts_string(ToIot);
 		cbi(gResetSw ,SYSTEM_RSW);
 		cdcd_reset(0);
-		watchdog_enable(100, 1);
+		watchdog_enable(500, 1);
 		while(1);
 	}
 	
 	
-	sprintf(txdataIot,"TEST!iot");
-	my_puts_string(ToIot);
+//--------------proc 1000ms--end---------------// 
 
   if(tic_60s++ < 59) return;
 	tic_60s = 0;
-  //----proc 60s --------  
+//----proc 60s ----------------------  
  
 
-	
+//-------------proc 60s -- end---------------// 	
   if(tic_60m++ < 59) return;
   tic_60m = 0;
-  //----proc 1t -------- 
+//------------proc 1t -------- 
 
 
-	
+//------------proc 1t --------  
   
 }
 
@@ -1227,7 +1228,7 @@ void rs_rece_uart1_inv(void)
 					 }
 	 			}
          if( dbgLevel >= 0  ){
-			   sprintf(txdatadbg ,"\r\n<0:%s",rp_cmd_buf1);
+			   sprintf(txdatadbg ,"\r\n<1_INV:%s",rp_cmd_buf1);
 			   memset(rp_cmd_buf1,0,sizeof(rp_cmd_buf1));
 			   my_puts_string (ToDbg);
          }
@@ -1288,36 +1289,25 @@ void rs_rece_uart0_iot(void)
        static char olddata;
        static int receive_timeout;
        unsigned char  rp_cmd_sub_sqc0;
-	   static unsigned int sCntuCnt = 0;
 	   
        char cmdbuf[RX_BUFFER_SIZE0+5] = {0} ;
 
 	   static unsigned int  rp_cmd_len0;
 	   static unsigned char rp_cmd_sqc0;
-	   static unsigned int  rp_cmd_idx0;
 
        switch(rp_cmd_sqc0)
        {
        case 0:
          rp_cmd_len0 = 0;
-         rp_cmd_idx0 = 0;
          rp_cmd_sub_sqc0 = 0;
          subCmdStatPosition = 0;
          rp_cmd_sqc0++; 
-         receive_timeout  = gSysCnt;
-		 sCntuCnt = 0;
          break;
        case 1:
            if(rx_wr_index0 != rx_rd_index0) {
                gDbgFuseCnt = 5; 
                data = getchar0_h ();
                receive_timeout = gSysCnt;
-			   if(sCntuCnt == 0){
-			   	  sCntuCnt = 200;
-				  sprintf(cmdbuf,"<1:");
-			      my_nputs_string (ToDbg, cmdbuf, 3 );
-			   	}
-			   
                switch(data)
                {
                case ' ':  //CR                //--  check < 
@@ -1332,25 +1322,32 @@ void rs_rece_uart0_iot(void)
                  rp_cmd_buf0[rp_cmd_len0++] = data;
                  rp_cmd_buf0[rp_cmd_len0] = 0;
                  olddata = data;
+								 receive_timeout = gSysCnt;
                 break;
                }
              }
-             if(gSysCnt != receive_timeout ){
-			 	receive_timeout = gSysCnt;
-				DEC(sCntuCnt);
-             	}
-			 if(sCntuCnt == 0){
-			 	 if(rp_cmd_len0 != 0)
-				 rp_cmd_sqc0++;
-			 	}	 
+        if(rp_cmd_len0 > 0){
+			 		if((gSysCnt - receive_timeout) > 200)
+							rp_cmd_sqc0;
+         }
          break;
        case 2:
-		   	 memcpy(cmdbuf,rp_cmd_buf0,rp_cmd_len0);
-			 my_nputs_string (ToDbg, cmdbuf, rp_cmd_len0 );
+         if( dbgLevel > 0  ){
+				 sprintf(txdatadbg ,"\r\n<0_IOT:%s",rp_cmd_buf0);
+				 my_puts_string (ToDbg);
+         }
+			 	 
+
+//			 my_nputs_string (ToDbg, cmdbuf, 3 );
+//		   memcpy(cmdbuf,rp_cmd_buf0,rp_cmd_len0);
+//			 my_nputs_string (ToDbg, cmdbuf, rp_cmd_len0 );
 //			 memcpy(txdataInv,cmdbuf,rp_cmd_len0);
-//		     sendReactionTriger = 1;
+//		   sendReactionTriger = 1;
 	   
-         //Cmd_judge (rp_cmd_buf0);
+         Cmd_judge_iot(rp_cmd_buf0);
+
+				 
+
          
          rp_cmd_sub_sqc0 = 0;
          rp_cmd_sqc0 = 0;
