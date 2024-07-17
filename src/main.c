@@ -1328,7 +1328,7 @@ void rs_rece_uart0_iot(void)
              }
         if(rp_cmd_len0 > 0){
 			 		if((gSysCnt - receive_timeout) > 200)
-							rp_cmd_sqc0;
+							rp_cmd_sqc0++;
          }
          break;
        case 2:
@@ -1345,9 +1345,6 @@ void rs_rece_uart0_iot(void)
 //		   sendReactionTriger = 1;
 	   
          Cmd_judge_iot(rp_cmd_buf0);
-
-				 
-
          
          rp_cmd_sub_sqc0 = 0;
          rp_cmd_sqc0 = 0;

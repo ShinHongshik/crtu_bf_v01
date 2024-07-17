@@ -611,7 +611,7 @@ uc08 Cmd_judge(char * dest){
 								 }
 						 break;
 					default:
-								 sprintf(dbgSendbuf,"num:[%0d,d_code:0x%02X\r\n]",i,subCmdValIndex);
+								 sprintf(dbgSendbuf,"num:[%0d,d_code:0x%02X]\r\n",i,subCmdValIndex);
 								 my_puts_string (dbgSndPort);
 						 break;
 				 }
