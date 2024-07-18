@@ -432,7 +432,7 @@ void flcd_refrash(UBYTE * img_addr){
 		char fr_buf[16] = {0};
 		static char * arr_t = msg;
 
-		strncpy(fr_buf,arr_t,15);
+		strncpy(fr_buf,arr_t,14);
 		if(*arr_t == ' ') arr_t = msg;
 		else arr_t++;
 		
