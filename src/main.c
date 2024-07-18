@@ -225,7 +225,7 @@ int main() {
     
     pwrsw_check(); //  pwr off  -> on :  lcd ini at usb used 
     vib_check();
-    drv_key_check();
+// io_in -> itrp   drv_key_check();
 		drv_adc_internal();
     drv_eep_at24c128();
     drv_lcd_1in5_oled();
@@ -1073,6 +1073,9 @@ void showHL(void)	{
 							printf("batt: %0.2f, BL : %0.2f V , tmp:%0.2f \n",gNowBattLv, gNowBLack_V, gNowtemp);
 							
 					case 0:
+						  if(isb(gfSystem_state, SYSPOWER_IS) == 0){
+			          printf("PWRSW_OFF~~!! or temper_err");
+							} 
 					break;	
 					default:
 							DEC(dbgLevel);

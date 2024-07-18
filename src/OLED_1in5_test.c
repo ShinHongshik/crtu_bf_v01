@@ -49,7 +49,7 @@
 extern void gpio_hs (const uint gpNum, char onoff );
 extern void OLED_1in5_Display(UBYTE *Image);
 void drv_lcd_1in5_oled(void);
-void flcd_refrash(void);
+void flcd_refrash(UBYTE * img_addr);
 
 
 
@@ -285,7 +285,7 @@ extern void drv_lcd_1in5_oled(void){
 	
 	switch(sDlSqc){
 		case 0:  // wait Sys stable
-			if((gSysCnt - cnt) < 1200) break;
+			if((gSysCnt - cnt) < 1000) break;
 			cnt = gSysCnt;
 		
 			
@@ -361,7 +361,7 @@ extern void drv_lcd_1in5_oled(void){
 			sDlSqc++;
 			break;
 		case 8:
-			if((gSysCnt - cnt) < 2000) break;
+			if((gSysCnt - cnt) < 500) break;
 			//Paint_Clear(BLACK);
 			for(UBYTE i=0; i<16; i++){
 				Paint_DrawRectangle(0, 8*i, 127, 8*(i+1), WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
@@ -391,7 +391,7 @@ extern void drv_lcd_1in5_oled(void){
 		case 10:
 			if((gSysCnt - cnt) < 2000) break;
 			cnt = gSysCnt;
-			if(gfLcdRefash == 1) sDlSqc = 11;
+			sDlSqc++;
 			if(gflcdsleep_n == 0){ 
 				sDlSqc = 12;
 				OLED_WriteReg(0xAE);
@@ -400,7 +400,7 @@ extern void drv_lcd_1in5_oled(void){
 			break;
 		case 11:
 			gfLcdRefash = 0;
-			flcd_refrash();
+			flcd_refrash(BlackImage);
 			sDlSqc = 10; 
 			break;
 		case 12:
@@ -427,7 +427,15 @@ extern void drv_lcd_1in5_oled(void){
 }
 
 
-void flcd_refrash(void){
+void flcd_refrash(UBYTE * img_addr){
+    static char msg[] = "soul_energy~~~ soul_energy~~~";
+		char fr_buf[16] = {0};
+		static char * arr_t = msg;
+
+		strncpy(fr_buf,arr_t,15);
+		if(*arr_t == ' ') arr_t = msg;
+		else arr_t++;
+		
 		Paint_DrawRectangle(80, 12, 90, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
 		Paint_DrawRectangle(60, 12, 70, 13, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
 		Paint_DrawRectangle(110, 5, 120, 10, WHITE, DOT_PIXEL_1X1, DRAW_FILL_FULL);
@@ -436,7 +444,7 @@ void flcd_refrash(void){
 		Paint_DrawRectangle(1, 1, 128, 128, WHITE, DOT_PIXEL_1X1, DRAW_FILL_EMPTY);
 		Paint_plug_l();
 		Paint_DrawString_EN(10, 80, "i_love_U", &Font12, 0x1, 0xb);
-		Paint_DrawString_EN(10, 92, "soul_energy", &Font16, 0x2, 0xc);
-		//OLED_1in5_Display_test(BlackImage);
+		Paint_DrawString_EN(10, 92, fr_buf, &Font12, 0x2, 0xc);
+		OLED_1in5_Display_test(img_addr);
 }
 
