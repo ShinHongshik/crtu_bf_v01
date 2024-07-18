@@ -391,11 +391,14 @@ extern void drv_lcd_1in5_oled(void){
 		case 10:
 			if((gSysCnt - cnt) < 2000) break;
 			cnt = gSysCnt;
-			sDlSqc++;
+			
 			if(gflcdsleep_n == 0){ 
 				sDlSqc = 12;
 				OLED_WriteReg(0xAE);
+			}else{
+				sDlSqc = 11;
 			}
+				
 			if(isb(gResetSw,LCD_RSW))sDlSqc = 14; 
 			break;
 		case 11:
