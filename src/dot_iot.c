@@ -1799,7 +1799,7 @@ void drv_eep_at24c128(void){
 			break;
 		case 23:
 			errcode = save_eep_page();
-			printf("ec:%d,%x\r\n",errcode,errcode);		
+			printf("EEPec:%d,%x\r\n",errcode,errcode);		
 			dSqc_eep = 3;
 			gdataSaveFlag = 0;
 			break;

@@ -162,6 +162,10 @@ int save_eep_page (void){
 	ui16 temp;
 	uc08 data[2048] = {0};
 	uni2 tmp_u ;
+	void * pt ;
+	int addr_1, addr_2 ;  
+	int addr_length ;
+	
 	int i  = 0 , err_code;
 
 
@@ -181,14 +185,25 @@ int save_eep_page (void){
 
 	data[0] = 0;
 	data[1] = 0;
-
+	pt = (void*) &(uEepv.su.eePortNumber) ;
+	addr_1 = (int)pt;
+	pt = (void*) &(uEepv.su.dummy_endof_eepval);
+	addr_2 = (int)pt;
+	addr_length = addr_2 - addr_1;
+	printf("val_size: %dBYTE\r\n",addr_length);
+  addr_length += 2;
+	if(addr_length >= 2048){
+		addr_length = 2047;
+		printf("val_size over!!!: ");
+	}
+	
 	
 	// i2c start
 	while (1)
 		{
 		data[i+2] = uEepv.addb[i];
 		i++;
-		if(i > 20)break;
+		if(i > addr_length)break;
 		}
 	//temp = i2c_write_blocking(DOT_DEFAULT_I2C,  addr_24c_high, arr, 4, false) ;
 	//i2c_write_blocking(i2c_default,  addr_24c_high, &arr[1], 1, true) ;
@@ -198,7 +213,7 @@ int save_eep_page (void){
 	// write val 
 	//i2c_write_blocking(DOT_DEFAULT_I2C,  addr_24c_high, &data[0], 2, true) ;
 	
-	err_code = i2c_write_blocking(DOT_DEFAULT_I2C, addr_24c_high, data , 64, false);
+	err_code = i2c_write_blocking(DOT_DEFAULT_I2C, addr_24c_high, data , addr_length , false);
 //	printf("%d,[%x],%d,[%x]\r\n",m_add,err_code,uEepv.addi[numberOfsaveVal],uEepv.addi[numberOfsaveVal]);
 	return err_code;
 }
@@ -208,10 +223,22 @@ int load_eep_page (void){
 	uc08 data[2048] = {0};
 	uni2 tmp_u ;
 	int i  = 0 , err_code;
-
+	void * pt ;
+	int addr_1, addr_2 ,addr_length ;
+	
 	data[0] = 0;
 	data[1] = 0;
-
+	pt = (void*) &(uEepv.su.eePortNumber) ;
+	addr_1 = (int)pt;
+	pt = (void*) &(uEepv.su.dummy_endof_eepval);
+	addr_2 = (int)pt;
+	addr_length = addr_2 - addr_1;
+	printf("val_size: %dBYTE\r\n",addr_length);
+  addr_length += 2;
+	if(addr_length >= 2048){
+		addr_length = 2047;
+		printf("val_size over!!!:");
+	}
 	
 	// i2c start
 
@@ -222,7 +249,7 @@ int load_eep_page (void){
 	//printf("%s",arr);
 	// write val 
 	i2c_write_blocking(DOT_DEFAULT_I2C, addr_24c_high, data , 2, true);
-	err_code = i2c_read_blocking(DOT_DEFAULT_I2C, addr_24c_high, &data[2] , 62, false);
+	err_code = i2c_read_blocking(DOT_DEFAULT_I2C, addr_24c_high, &data[2] , addr_length, false);
 //	printf("%d,[%x],%d,[%x]\r\n",m_add,err_code,uEepv.addi[numberOfsaveVal],uEepv.addi[numberOfsaveVal]);
 	
 	while (1)

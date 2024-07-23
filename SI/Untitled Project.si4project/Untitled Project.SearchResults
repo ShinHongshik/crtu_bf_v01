@@ -1,7 +1,5 @@
----- CMTI_HSC_IOT Matches (2 in 1 files) ----
-HS_CMD_IOT in dot_iot.c (src) :   ,CMTI_HSC_IOT
-Cmd_judge_iot in dot_iot.c (src) : 					 case CMTI_HSC_IOT:
----- CMTI_HSC_IOT Search Errors Encountered (2) ----
-The following 2 files could not be processed:
-C:\rp2040\pico-sdk\src\rp2040\hardware_regs\include\hardware\regs\dma.h : File could not be opened.
-C:\rp2040\pico-sdk\src\rp2040\hardware_regs\include\hardware\regs\pads_bank0.h : File could not be opened.
+---- gfLcdRefash Matches (4 in 3 files) ----
+main.c (src) line 83 :  char gfLcdRefash = 0;
+OLED_1in5.h (src) line 50 : extern char gfLcdRefash;
+drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(gfLcdRefash == 1) sDlSqc = 11;
+drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			gfLcdRefash = 0;
