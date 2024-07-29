@@ -24,7 +24,7 @@
                 "break main",
                 "continue"
             ],
-            "searchDir": ["C:/VSARM/pico/openocd/tcl"],
+            "searchDir": ["d:/pico/tools/openocd/tcl"],
         }
     ]
 }
