@@ -1,5 +1,0 @@
----- gfLcdRefash Matches (4 in 3 files) ----
-main.c (src) line 83 :  char gfLcdRefash = 0;
-OLED_1in5.h (src) line 50 : extern char gfLcdRefash;
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			if(gfLcdRefash == 1) sDlSqc = 11;
-drv_lcd_1in5_oled in OLED_1in5_test.c (src) : 			gfLcdRefash = 0;
